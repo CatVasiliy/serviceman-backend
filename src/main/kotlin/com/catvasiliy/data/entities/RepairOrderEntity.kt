@@ -13,6 +13,7 @@ object RepairOrderEntity : Table("repair_orders"), RepairOrderDao {
 
     val id = integer("id").autoIncrement().uniqueIndex()
     val faultDescription = varchar("fault_description", 128).nullable()
+    val clientId = reference("client_id", ClientEntity.id)
 
     override val primaryKey: PrimaryKey = PrimaryKey(id)
 
@@ -27,11 +28,13 @@ object RepairOrderEntity : Table("repair_orders"), RepairOrderDao {
     override suspend fun insertRepairOrder(repairOrder: RepairOrderPostBody): Unit = dbQuery {
         insert { insertStatement ->
             insertStatement[faultDescription] = repairOrder.faultDescription
+            insertStatement[clientId] = repairOrder.clientId
         }
     }
 }
 
 private fun ResultRow.toRepairOrder() = RepairOrder(
     id = this[RepairOrderEntity.id],
-    faultDescription = this[RepairOrderEntity.faultDescription]
+    faultDescription = this[RepairOrderEntity.faultDescription],
+    clientId = this[RepairOrderEntity.clientId]
 )

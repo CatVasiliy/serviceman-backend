@@ -4,5 +4,6 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class RepairOrderPostBody(
-    val faultDescription: String
+    val faultDescription: String,
+    val clientId: Int
 )

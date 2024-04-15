@@ -1,4 +1,4 @@
-package com.catvasiliy.presentation.repair_orders
+package com.catvasiliy.presentation.repair_order
 
 import com.catvasiliy.domain.model.repair_order.RepairOrderPostBody
 import io.ktor.http.*
@@ -37,6 +37,13 @@ fun Route.repairOrderRoutes() {
 
         post {
             val repairOrder = call.receive<RepairOrderPostBody>()
+
+            val isClientExists = repairOrderService.checkClientExists(repairOrder.clientId)
+
+            if (!isClientExists) {
+                call.respond(HttpStatusCode.BadRequest)
+                return@post
+            }
 
             repairOrderService.createRepairOrder(repairOrder)
 
