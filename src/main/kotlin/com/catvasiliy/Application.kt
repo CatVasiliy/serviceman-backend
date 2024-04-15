@@ -1,9 +1,6 @@
 package com.catvasiliy
 
-import com.catvasiliy.plugins.configureDatabase
-import com.catvasiliy.plugins.configureMonitoring
-import com.catvasiliy.plugins.configureRouting
-import com.catvasiliy.plugins.configureSerialization
+import com.catvasiliy.plugins.*
 import io.ktor.server.application.*
 
 fun main(args: Array<String>) {
@@ -12,8 +9,9 @@ fun main(args: Array<String>) {
 
 @Suppress("unused")
 fun Application.module() {
-    configureSerialization()
-    configureMonitoring()
     configureRouting()
+    configureDependencyInjection()
+    configureSerialization()
+    configureLogging()
     configureDatabase()
 }

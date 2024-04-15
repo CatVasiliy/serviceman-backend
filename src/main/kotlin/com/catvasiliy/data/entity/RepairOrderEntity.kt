@@ -1,10 +1,12 @@
-package com.catvasiliy.repair_orders
+package com.catvasiliy.data.entity
 
-import com.catvasiliy.repair_orders.RepairOrderTable.faultDescription
+import com.catvasiliy.domain.model.repair_order.RepairOrder
+import com.catvasiliy.domain.dao.RepairOrderDao
+import com.catvasiliy.domain.model.repair_order.RepairOrderPostBody
 import org.jetbrains.exposed.sql.*
 import org.jetbrains.exposed.sql.transactions.transaction
 
-object RepairOrderTable : Table("repair_orders"), RepairOrderDao {
+object RepairOrderEntity : Table("repair_orders"), RepairOrderDao {
 
     val id = integer("id").autoIncrement().uniqueIndex()
     val faultDescription = varchar("fault_description", 128).nullable()
@@ -16,10 +18,10 @@ object RepairOrderTable : Table("repair_orders"), RepairOrderDao {
     }
 
     override fun getRepairOrderById(id: Int): RepairOrder? = transaction {
-        select { this@RepairOrderTable.id eq id }.map(ResultRow::toRepairOrder).singleOrNull()
+        select { RepairOrderEntity.id eq id }.map(ResultRow::toRepairOrder).singleOrNull()
     }
 
-    override fun insertRepairOrder(repairOrder: RepairOrder): Unit = transaction {
+    override fun insertRepairOrder(repairOrder: RepairOrderPostBody): Unit = transaction {
         insert { insertStatement ->
             insertStatement[faultDescription] = repairOrder.faultDescription
         }
@@ -27,5 +29,6 @@ object RepairOrderTable : Table("repair_orders"), RepairOrderDao {
 }
 
 private fun ResultRow.toRepairOrder() = RepairOrder(
-    faultDescription = this[faultDescription]
+    id = this[RepairOrderEntity.id],
+    faultDescription = this[RepairOrderEntity.faultDescription]
 )

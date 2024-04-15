@@ -24,17 +24,21 @@ dependencies {
     implementation(libs.ktor.server.core)
     implementation(libs.ktor.server.netty)
 
-    // Ktor authentication
-    implementation(libs.ktor.server.auth)
-    implementation(libs.ktor.server.auth.jwt)
+    // Dependency injection
+    implementation(libs.koin.ktor)
+    implementation(libs.koin.logger)
+
+    // Ktor serialization
+    implementation(libs.ktor.server.content.negotiation)
+    implementation(libs.ktor.serialization.kotlinx.json)
 
     // Ktor logging
     implementation(libs.ktor.server.call.logging)
     implementation(libs.logback.classic)
 
-    // Ktor serialization
-    implementation(libs.ktor.server.content.negotiation)
-    implementation(libs.ktor.serialization.kotlinx.json)
+    // Ktor authentication
+    implementation(libs.ktor.server.auth)
+    implementation(libs.ktor.server.auth.jwt)
 
     // Database
     implementation(libs.exposed.core)

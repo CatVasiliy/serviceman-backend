@@ -1,8 +1,11 @@
 package com.catvasiliy.plugins
 
-import com.catvasiliy.repair_orders.repairOrderRoutes
+import com.catvasiliy.presentation.repair_orders.repairOrderRoutes
 import io.ktor.server.application.*
+import io.ktor.server.routing.*
 
 fun Application.configureRouting() {
-    repairOrderRoutes()
+    routing {
+        repairOrderRoutes()
+    }
 }

@@ -1,6 +1,6 @@
 package com.catvasiliy.plugins
 
-import com.catvasiliy.repair_orders.RepairOrderTable
+import com.catvasiliy.data.entity.RepairOrderEntity
 import io.ktor.server.application.*
 import org.jetbrains.exposed.sql.Database
 import org.jetbrains.exposed.sql.SchemaUtils
@@ -21,6 +21,6 @@ fun Application.configureDatabase() {
     )
 
     transaction(database) {
-        SchemaUtils.create(RepairOrderTable)
+        SchemaUtils.create(RepairOrderEntity)
     }
 }
