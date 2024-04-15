@@ -1,10 +1,13 @@
-package com.catvasiliy.data.entity
+package com.catvasiliy.data.entities
 
-import com.catvasiliy.domain.model.repair_order.RepairOrder
+import com.catvasiliy.data.PostgreSqlDatabase.dbQuery
 import com.catvasiliy.domain.dao.RepairOrderDao
+import com.catvasiliy.domain.model.repair_order.RepairOrder
 import com.catvasiliy.domain.model.repair_order.RepairOrderPostBody
-import org.jetbrains.exposed.sql.*
-import org.jetbrains.exposed.sql.transactions.transaction
+import org.jetbrains.exposed.sql.ResultRow
+import org.jetbrains.exposed.sql.Table
+import org.jetbrains.exposed.sql.insert
+import org.jetbrains.exposed.sql.selectAll
 
 object RepairOrderEntity : Table("repair_orders"), RepairOrderDao {
 
@@ -13,15 +16,15 @@ object RepairOrderEntity : Table("repair_orders"), RepairOrderDao {
 
     override val primaryKey: PrimaryKey = PrimaryKey(id)
 
-    override fun getRepairOrdersList(): List<RepairOrder> = transaction {
+    override suspend fun getRepairOrdersList(): List<RepairOrder> = dbQuery {
         selectAll().map(ResultRow::toRepairOrder)
     }
 
-    override fun getRepairOrderById(id: Int): RepairOrder? = transaction {
-        select { RepairOrderEntity.id eq id }.map(ResultRow::toRepairOrder).singleOrNull()
+    override suspend fun getRepairOrderById(id: Int): RepairOrder? = dbQuery {
+        selectAll().where { RepairOrderEntity.id eq id }.map(ResultRow::toRepairOrder).singleOrNull()
     }
 
-    override fun insertRepairOrder(repairOrder: RepairOrderPostBody): Unit = transaction {
+    override suspend fun insertRepairOrder(repairOrder: RepairOrderPostBody): Unit = dbQuery {
         insert { insertStatement ->
             insertStatement[faultDescription] = repairOrder.faultDescription
         }

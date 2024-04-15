@@ -4,7 +4,7 @@ import com.catvasiliy.domain.model.repair_order.RepairOrder
 import com.catvasiliy.domain.model.repair_order.RepairOrderPostBody
 
 interface RepairOrderDao {
-    fun getRepairOrdersList(): List<RepairOrder>
-    fun getRepairOrderById(id: Int): RepairOrder?
-    fun insertRepairOrder(repairOrder: RepairOrderPostBody)
+    suspend fun getRepairOrdersList(): List<RepairOrder>
+    suspend fun getRepairOrderById(id: Int): RepairOrder?
+    suspend fun insertRepairOrder(repairOrder: RepairOrderPostBody)
 }

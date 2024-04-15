@@ -1,26 +1,17 @@
 package com.catvasiliy.plugins
 
-import com.catvasiliy.data.entity.RepairOrderEntity
+import com.catvasiliy.data.PostgreSqlDatabase
+import com.catvasiliy.data.PostgreSqlDatabaseConfig
 import io.ktor.server.application.*
-import org.jetbrains.exposed.sql.Database
-import org.jetbrains.exposed.sql.SchemaUtils
-import org.jetbrains.exposed.sql.transactions.transaction
 
 fun Application.configureDatabase() {
-    val dbHost = environment.config.property("database.host").getString()
-    val dbPort = environment.config.property("database.port").getString()
-    val dbName = environment.config.property("database.name").getString()
-    val dbUser = environment.config.property("database.user").getString()
-    val dbPassword = environment.config.property("database.password").getString()
-
-    val database = Database.connect(
-        url = "jdbc:postgresql://$dbHost:$dbPort/$dbName",
-        driver = "org.postgresql.Driver",
-        user = dbUser,
-        password = dbPassword
+    val databaseConfig = PostgreSqlDatabaseConfig(
+        host = environment.config.property("database.host").getString(),
+        port = environment.config.property("database.port").getString(),
+        name = environment.config.property("database.name").getString(),
+        user = environment.config.property("database.user").getString(),
+        password = environment.config.property("database.password").getString()
     )
 
-    transaction(database) {
-        SchemaUtils.create(RepairOrderEntity)
-    }
+    PostgreSqlDatabase.initialize(databaseConfig)
 }
