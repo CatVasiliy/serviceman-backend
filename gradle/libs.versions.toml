@@ -3,7 +3,7 @@
 kotlin = "1.9.23"
 ktor = "2.3.10"
 logback = "1.4.14"
-exposed = "0.41.1"
+exposed = "0.49.0"
 postgresql = "42.7.3"
 koin = "3.5.6"
 
