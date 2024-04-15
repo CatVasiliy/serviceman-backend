@@ -31,6 +31,7 @@ ktor-server-auth-jwt = { group = "io.ktor", name = "ktor-server-auth-jwt-jvm" }
 
 # Database
 exposed-core = { group = "org.jetbrains.exposed", name = "exposed-core", version.ref = "exposed" }
+exposed-dao = { group = "org.jetbrains.exposed", name = "exposed-dao", version.ref = "exposed" }
 exposed-jdbc = { group = "org.jetbrains.exposed", name = "exposed-jdbc", version.ref = "exposed" }
 postgresql = { group = "org.postgresql", name = "postgresql", version.ref = "postgresql" }
 

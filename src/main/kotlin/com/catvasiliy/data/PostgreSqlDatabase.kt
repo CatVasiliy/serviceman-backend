@@ -1,7 +1,7 @@
 package com.catvasiliy.data
 
-import com.catvasiliy.data.entities.ClientEntity
-import com.catvasiliy.data.entities.RepairOrderEntity
+import com.catvasiliy.data.client.ClientTable
+import com.catvasiliy.data.repair_order.RepairOrderTable
 import kotlinx.coroutines.Dispatchers
 import org.jetbrains.exposed.sql.Database
 import org.jetbrains.exposed.sql.SchemaUtils
@@ -12,8 +12,8 @@ import org.jetbrains.exposed.sql.transactions.transaction
 object PostgreSqlDatabase {
 
     private val entities: Array<Table> = arrayOf(
-        RepairOrderEntity,
-        ClientEntity
+        RepairOrderTable,
+        ClientTable
     )
 
     fun initialize(config: PostgreSqlDatabaseConfig) {
